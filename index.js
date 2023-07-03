@@ -8,12 +8,17 @@ const app = express();
 //Set the View Engine to EJS//
 app.set("view engine", 'ejs');
 
+
+
+
+
+
+
+
+//Frontend EJS Templates routes//
 app.use('/', frontendRoutes);
-
 app.use('/signup', frontendRoutes);
-
 app.use('/forgotpassword', frontendRoutes);
-
 app.use('/dashboard', frontendRoutes);
 
 
