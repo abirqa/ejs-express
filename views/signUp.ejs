@@ -5,16 +5,77 @@
         <h1 style="text-align: center; margin-bottom: 20px; font-weight: 700;">Create a Account Now</h1>
         <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
         <p id="profile-name" class="profile-name-card"></p>
-        <form class="form-signin">
+
+        <div id="alertMessage" class="alert" role="alert" style="display: none !important">
+            <strong></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <form id="SignUpForm" class="form-signin">
             <span id="reauth-email" class="reauth-email"></span>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Full Name" required autofocus>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email ID" required autofocus>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Password" required autofocus>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Confirm Password" required autofocus>
+            <input type="text" name="fullname" id="inputname" class="form-control" placeholder="Full Name" autofocus>
+            <input type="text" name="email" id="inputemail" class="form-control" placeholder="Email ID" autofocus>
+            <input type="password" name="password" id="inputpassword" class="form-control" placeholder="Password" autofocus>
+            <input type="password" name="ConfirmPassword" id="inputConfirmPassword" class="form-control" placeholder="Confirm Password" autofocus>
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign Up Now!</button>
         </form><!-- /form -->
+
         <a href="/" class="forgot-password">
             Already have a Account? Login Now
         </a>
     </div><!-- /card-container -->
 </div><!-- /container -->
+
+    <script>
+        document.getElementById("SignUpForm").addEventListener("submit", function (e) {
+        e.preventDefault();
+            
+        const form = e.target;
+        const formData = {
+            fullname: form.elements.fullname.value,
+            email: form.elements.email.value,
+            password: form.elements.password.value,
+            ConfirmPassword: form.elements.ConfirmPassword.value,
+        };
+
+        // Make an AJAX request to the API route
+        fetch("/api/v1/RegisterUser", {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+        })
+            .then((response) => response.json())
+                .then((data) => {
+                    //console.log(data.message);
+                    let alertClass = "";
+                    let message = "";
+
+                    if (data.success_message) {
+                    alertClass = "alert-success";
+                    message = data.success_message;
+
+                    } else if (data.message) {
+                    alertClass = "alert-danger";
+                    message = data.message;
+                    }
+                    showAlert(message, alertClass);
+                })
+
+                .catch((error) => {
+                console.error(error);
+                });
+            });
+
+    function showAlert(message, alertClass) {
+    const alertElement = document.getElementById("alertMessage");
+    alertElement.className = `alert ${alertClass}`;
+    alertElement.textContent = message;
+    alertElement.style.display = "block";
+  }
+
+
+    </script>
