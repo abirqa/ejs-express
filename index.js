@@ -4,9 +4,14 @@ const frontendRoutes = require('./routes/frontendRoutes');
 const dbConfig = require('./config/dbConfig');
 const RegisterUserRouter = require('./routes/createUser');
 const getAllUser = require('./routes/getAllUser');
+const loginUserRouter = require('./routes/loginUser');
+const cookieParser = require('cookie-parser')
 
 // Initialiaze Express App//
 const app = express();
+
+app.use(cookieParser());
+
 
 //Set the View Engine to EJS//
 app.set("view engine", 'ejs');
@@ -18,7 +23,7 @@ app.set("view engine", 'ejs');
 // Backend API Routes //
 app.use('/api/v1/RegisterUser', RegisterUserRouter);
 app.use('/api/v1/users', getAllUser);
-
+app.use('/api/v1/LoginUser', loginUserRouter);
 
 
 

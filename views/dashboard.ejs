@@ -1,2 +1,12 @@
 <%- include('header.ejs'); %>
-<h1>Welcome to Dashboard User !</h1>
+
+<% if (!accessToken) { %>
+  <div class="alert alert-warning alert-dismissible fade show" role="alert">
+    <strong>Please sign in to view the dashboard.</strong>
+  </div>
+<% } else { %>
+  <!-- Your dashboard content here -->
+  <p>Welcome to the dashboard, <%= user.fullname %>!</p>
+  <p>User ID: <%= user.userID %></p>
+  <p>Email: <%= user.email %></p>
+<% } %>

@@ -4,22 +4,82 @@
         <h1 style="text-align: center; margin-bottom: 20px; font-weight: 700;">Login to Your Account</h1>
         <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
         <p id="profile-name" class="profile-name-card"></p>
-        <form class="form-signin">
+
+        <div id="alertMessage" class="alert" role="alert" style="display: none">
+            <strong>This is a Bootstrap Dismissbale Alert!</strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <form id="LoginForm" class="form-signin">
             <span id="reauth-email" class="reauth-email"></span>
-            <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-            <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
-            <div id="remember" class="checkbox">
-                <label>
-                    <input type="checkbox" value="remember-me"> Remember me
-                </label>
-            </div>
+            <input type="text" name="email" id="inputEmail" class="form-control" placeholder="Email address" autofocus>
+            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" autofocus>
             <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
         </form><!-- /form -->
+
         <a href="/forgotpassword" class="forgot-password">
             Forgot the password?
-        </a>
+        </a><br>
         <a href="/signup" class="forgot-password" style="float: right;">
             Create a Account
         </a>
     </div><!-- /card-container -->
 </div><!-- /container -->
+
+
+<script>
+    document.getElementById("LoginForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        
+        const form = e.target;
+        const formData = {
+            email: form.elements.email.value,
+            password: form.elements.password.value
+        };
+
+        //Make an post ajax request to login api//
+        fetch('/api/v1/LoginUser', {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+            credentials: 'include',
+        })
+
+        .then(response =>
+            response.json()).then(data => {
+            //console.log(data);
+            
+            let message = '';
+            let alertClass = '';
+
+            if (data.success_login_message) {
+                window.location.href="/dashboard";
+                alertClass = "alert-success";
+                message = data.success_login_message;
+            
+            } else if (data.message) {
+                alertClass = "alert-danger";
+                message = data.message;
+            }
+            
+            showAlert(message, alertClass);
+        })
+
+        .catch((error) => {
+            console.error(error);
+        });
+
+    })
+
+    function showAlert(message, alertClass) {
+        const alertElement = document.getElementById("alertMessage");
+        alertElement.className = `alert ${alertClass}`;
+        alertElement.textContent = message;
+        alertElement.style.display = "block";    
+    }
+
+</script>
