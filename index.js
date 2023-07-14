@@ -5,6 +5,9 @@ const dbConfig = require('./config/dbConfig');
 const RegisterUserRouter = require('./routes/createUser');
 const getAllUser = require('./routes/getAllUser');
 const loginUserRouter = require('./routes/loginUser');
+const ForgotPasswordRouter = require('./routes/forgotPassword');
+const ResetPasswordRouter = require('./routes/resetPassword');
+const LogoutRouter = require('./routes/logout');
 const cookieParser = require('cookie-parser')
 
 // Initialiaze Express App//
@@ -24,8 +27,9 @@ app.set("view engine", 'ejs');
 app.use('/api/v1/RegisterUser', RegisterUserRouter);
 app.use('/api/v1/users', getAllUser);
 app.use('/api/v1/LoginUser', loginUserRouter);
-
-
+app.use('/api/v1/ForgotPassword', ForgotPasswordRouter);
+app.use('/api/v1/reset-password', ResetPasswordRouter);
+app.use('/api/v1/logout', LogoutRouter);
 
 //Frontend EJS Templates routes//
 app.use('/', frontendRoutes);

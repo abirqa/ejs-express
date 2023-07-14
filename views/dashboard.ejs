@@ -6,7 +6,46 @@
   </div>
 <% } else { %>
   <!-- Your dashboard content here -->
-  <p>Welcome to the dashboard, <%= user.fullname %>!</p>
-  <p>User ID: <%= user.userID %></p>
-  <p>Email: <%= user.email %></p>
+  <h1 style="text-align: center; color: aliceblue; margin-top: 20px;">Welcome to the dashboard!</h1>
+  <div class="container d-flex justify-content-center">
+    <div class="row align-items-center">
+      <div class="col-12 col-sm-8 col-md-6 col-lg-4">
+        <div class="card">
+          <img class="card-img-top" src="https://s3.eu-central-1.amazonaws.com/bootstrapbaymisc/blog/24_days_bootstrap/bologna-1.jpg" alt="Bologna">
+          <div class="card-body">
+            <h4 class="card-title">Hi, <%= user.fullname %></h4>
+            <p>User ID: <%= user.userID %></p>
+            <h6 class="card-subtitle mb-2 text-muted">Email: <%= user.email %></h6>
+            <p class="card-text">It is the seventh most populous city in Italy, at the heart of a metropolitan area of about one million people. </p>
+            <a href="javascript:void(0)" class="card-link">Add Data</a>
+            <a href="#" id="logout" class="card-link">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 <% } %>
+
+ <script>
+  const logoutButton = document.getElementById('logout');
+
+  logoutButton.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    // Make a POST request to the logout API
+    fetch('/api/v1/logout', {
+      method: 'POST',
+      credentials: 'include' // Include credentials if required for your authentication system
+    })
+      .then(response => response.json())
+      .then(data => {
+        // Display the alert message
+        alert(data.message);
+        //redirect them to login page
+        window.location.href = '/';
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }); 
+</script>

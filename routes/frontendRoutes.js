@@ -20,6 +20,11 @@ frontendRoutes.get('/forgotpassword', (req, res)=>{
     res.render('forgotPassword');
 });
 
+//Route for Reset Password Page
+frontendRoutes.get('/reset-password', (req, res)=>{
+    res.render('resetPassword');
+});
+
 // Route for Dashboard
 // Get the auth middleware in the route //
 frontendRoutes.get('/dashboard', auth, (req, res) => {
