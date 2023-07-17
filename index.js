@@ -8,6 +8,7 @@ const loginUserRouter = require('./routes/loginUser');
 const ForgotPasswordRouter = require('./routes/forgotPassword');
 const ResetPasswordRouter = require('./routes/resetPassword');
 const LogoutRouter = require('./routes/logout');
+const updateUserRouter = require('./routes/updateUser');
 const cookieParser = require('cookie-parser')
 
 // Initialiaze Express App//
@@ -30,6 +31,7 @@ app.use('/api/v1/LoginUser', loginUserRouter);
 app.use('/api/v1/ForgotPassword', ForgotPasswordRouter);
 app.use('/api/v1/reset-password', ResetPasswordRouter);
 app.use('/api/v1/logout', LogoutRouter);
+app.use('/api/v1/UpdateUser', updateUserRouter)
 
 //Frontend EJS Templates routes//
 app.use('/', frontendRoutes);

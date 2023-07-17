@@ -1,0 +1,105 @@
+<%- include('header.ejs'); %>
+
+<% if(accessToken) { %>
+<div class="container">
+    <div class="card card-container">
+        <h1 style="text-align: center; margin-bottom: 20px; font-weight: 700;">Your Profile</h1>
+        <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
+        <p id="profile-name" class="profile-name-card">USER ID: <%= user.userID %></p>
+
+        <div id="alertMessage" class="alert" role="alert" style="display: none !important">
+            <strong></strong>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <form id="accountsettings" class="form-signin" enctype="multipart/form-data">
+            <span id="reauth-email" class="reauth-email"></span>
+            <input type="text" name="fullname" id="inputname" class="form-control" placeholder="Full Name" value="<%= user.fullname %>"autofocus>
+            <input type="text" name="email" id="inputemail" class="form-control" placeholder="Email ID" value="<%= user.email %>" autofocus>
+            <button type="button" id="initProfilePhotos" class="btn btn-warning" onclick="initProfilePhoto()">Change Profile Photo</button>
+            <input type="file" name="userphoto" id="profilePhoto" class="form-control" style="display: none; margin-bottom: 20px;">
+            <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Update Profile</button>
+        </form><!-- /form -->
+
+        <a href="/dashboard" class="forgot-password">
+            Back to Dashboard
+        </a>
+    </div><!-- /card-container -->
+</div><!-- /container -->
+
+<% } %>
+
+<script>
+    // Trigger the input field for uploading profile photo //
+    function initProfilePhoto() {
+        var uploadBtn = document.getElementById("initProfilePhotos");
+        var inputField = document.getElementById("profilePhoto");
+
+        uploadBtn.style.display = 'none';
+        inputField.style.display = 'block';
+    }
+
+    // Send form data to api //
+    
+    document.getElementById("accountsettings").addEventListener("submit", function(e) {
+        e.preventDefault();
+        
+        const form = e.target;
+        const formData = {
+            fullname: form.elements.fullname.value,
+            email: form.elements.email.value,
+        };
+
+        console.log(formData);
+
+        //Make an post ajax request to login api//
+        fetch(`/api/v1/UpdateUser/<%= user.userID%>`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+            //body: formData,
+            credentials: 'include',
+        })
+
+        .then(response =>
+            response.json()).then(data => {
+            console.log(data);
+            
+            let message = '';
+            let alertClass = '';
+
+            if (data.success_msg) {
+                //window.location.href="/resetPassword";
+                alertClass = "alert-success";
+                message = data.success_msg;
+
+                // Update the input fields with the updated values
+                form.elements.fullname.value = data.fullname;
+                form.elements.email.value = data.email;
+            
+            } else {
+                alertClass = "alert-danger";
+                message = data.message;
+            }
+            
+            showAlert(message, alertClass);
+        })
+
+        .catch((error) => {
+            console.error(error);
+        });
+
+    })
+
+    function showAlert(message, alertClass) {
+        const alertElement = document.getElementById("alertMessage");
+        alertElement.className = `alert ${alertClass}`;
+        alertElement.textContent = message;
+        alertElement.style.display = "block";    
+    }
+
+</script>

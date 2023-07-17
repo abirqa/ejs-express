@@ -25,6 +25,15 @@ frontendRoutes.get('/reset-password', (req, res)=>{
     res.render('resetPassword');
 });
 
+//Route for Edit Profile Page
+frontendRoutes.get('/user-profile', auth, (req, res) => {
+
+    const accessToken = req.cookies.accessToken;
+    const user = req.user; 
+    console.log(user);
+    res.render('accountSettings', { accessToken, user });
+});
+
 // Route for Dashboard
 // Get the auth middleware in the route //
 frontendRoutes.get('/dashboard', auth, (req, res) => {
@@ -34,7 +43,7 @@ const accessToken = req.cookies.accessToken;
 
   // Access the authenticated user details via req.user
   const user = req.user; 
-  console.log(user);
+  //console.log(user);
   // Render the dashboard page & send the accessToken variable & user variable to dashboard //
   res.render('dashboard', { accessToken, user });
 
