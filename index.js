@@ -42,7 +42,7 @@ app.use('/', frontendRoutes);
 app.use('/signup', frontendRoutes);
 app.use('/forgotpassword', frontendRoutes);
 app.use('/dashboard', frontendRoutes);
-
+// app.use('/change-password', frontendRoutes);
 
 
 app.listen(port, (req, res)=>{

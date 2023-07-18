@@ -51,9 +51,11 @@ const accessToken = req.cookies.accessToken;
   res.render('dashboard', { accessToken, user });
 
 });
-  
-  
-  
+
+// Route for Change Password //
+frontendRoutes.get('/change-password', (req, res) => {
+    res.render('changePassword');
+})
   
 
 
