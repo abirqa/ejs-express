@@ -6,7 +6,43 @@
   </div>
 <% } else { %>
   <!-- Your dashboard content here -->
-  <h1 style="text-align: center; color: aliceblue; margin-top: 20px;">Welcome to the dashboard!</h1>
+   <!-- Navbar -->
+   <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Menu Items -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/dashboard">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">All Posts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Users</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">New Entry</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">All Entries</a>
+      </li>
+    </ul>
+
+    <!-- Welcome User Dropdown -->
+    <ul class="navbar-nav" style="margin-right: 20px;"> 
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Welcome <%= user.fullname %>
+          <img src="<%= user.userphoto %>" alt="Avatar" width="30" height="30" class="rounded-circle">
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/user-profile">My Account</a>
+          <a class="dropdown-item" href="#">Change Password</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Logout</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
   <div class="container d-flex justify-content-center">
     <div class="row align-items-center">
       <div class="col-12 col-sm-8 col-md-6 col-lg-4">

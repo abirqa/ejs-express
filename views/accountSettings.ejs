@@ -1,10 +1,51 @@
 <%- include('header.ejs'); %>
 
 <% if(accessToken) { %>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Menu Items -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/dashboard">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">All Posts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Users</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">New Entry</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">All Entries</a>
+      </li>
+    </ul>
+
+    <!-- Welcome User Dropdown -->
+    <ul class="navbar-nav" style="margin-right: 20px;"> 
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Welcome <%= user.fullname %>
+          <img src="<%= user.userphoto %>" alt="Avatar" width="30" height="30" class="rounded-circle">
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/user-profile">My Account</a>
+          <a class="dropdown-item" href="#">Change Password</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#">Logout</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
 <div class="container">
     <div class="card card-container">
         <h1 style="text-align: center; margin-bottom: 20px; font-weight: 700;">Your Profile</h1>
+        <%if(user.userphoto) { %>
         <img id="profile-img" class="profile-img-card" src="<%= user.userphoto %>" data-profilephoto="<%= user.userphoto %>"/>
+        <% } else { %>
+        <img id="profile-img" class="profile-img-card" src="https://www.pngmart.com/files/22/User-Avatar-Profile-PNG.png"/>
+        <% } %>
         <p id="profile-name" class="profile-name-card">USER ID: <%= user.userID %></p>
 
         <div id="alertMessage" class="alert" role="alert" style="display: none !important">
