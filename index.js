@@ -1,5 +1,6 @@
 const express = require('express');
 const port = process.env.port || 5000;
+const path = require('path');
 const frontendRoutes = require('./routes/frontendRoutes');
 const dbConfig = require('./config/dbConfig');
 const RegisterUserRouter = require('./routes/createUser');
@@ -15,6 +16,9 @@ const cookieParser = require('cookie-parser')
 const app = express();
 
 app.use(cookieParser());
+
+// Serve static files from the "uploads" directory
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 
 //Set the View Engine to EJS//

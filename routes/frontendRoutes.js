@@ -27,10 +27,13 @@ frontendRoutes.get('/reset-password', (req, res)=>{
 
 //Route for Edit Profile Page
 frontendRoutes.get('/user-profile', auth, (req, res) => {
-
+    
+    //set the accessToken in the cookies at frontend
     const accessToken = req.cookies.accessToken;
+    
+    // Store the user details in varibale
     const user = req.user; 
-    console.log(user);
+    
     res.render('accountSettings', { accessToken, user });
 });
 

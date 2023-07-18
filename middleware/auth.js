@@ -15,7 +15,7 @@ const accessToken = req.cookies.accessToken;
 
 // Check if accesstoken is not present in browser cookie, display error //
 if (!accessToken) {
-    return res.status(401).send("<h2 style='text-align: center; text-transform: capitalize'>You have been logged out from the system due to inactivity! Please Login First.</h2>");
+    return res.status(401).send("<h2 style='text-align: center; text-transform: capitalize'>You have been logged out from the system due to inactivity! Please <a href='/'>Login</a> First.</h2>");
 }
 
 // If cookie found, then execute the rest of the code and sign in the respective user //

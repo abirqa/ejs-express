@@ -50,7 +50,7 @@ loginUserRouter.post('/', async (req,res) => {
         }
 
         // Create a Cookie variable and store the accessToken in it //
-        const expirationTime = new Date(Date.now() + 1 * 60 * 1000); //Cookie variable expires in 1 minutes from now
+        const expirationTime = new Date(Date.now() + 2 * 60 * 1000); //Cookie variable expires in 2 minutes from now
 
         //If password and email both matches generate a JWT for accessing the site//
         jwt.sign(
@@ -58,7 +58,8 @@ loginUserRouter.post('/', async (req,res) => {
                 userDetails: {
                     userID: user.user_id,
                     fullname: user.fullname,
-                    email: user.email 
+                    email: user.email, 
+                    userphoto: user.profilephoto,
                 } 
             }, // Passwing the payload in JWT
             process.env.PRIVATE_JWT_KEY, // Passing the Secret Key
@@ -87,6 +88,7 @@ loginUserRouter.post('/', async (req,res) => {
                             user_id: user.user_id,
                             fullname: user.fullname,
                             email: user.email,
+                            userphoto: user.profilephoto,
                         },
                     }
                 )
