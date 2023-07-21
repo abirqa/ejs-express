@@ -1,0 +1,16 @@
+// .devcontainer/devcontainer.json
+{
+  "name": "Node.js EJS Express",
+  "image": "node:14",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": [
+    "dbaeumer.vscode-eslint"
+    // Add any other extensions you want to install in the dev container
+  ],
+  "forwardPorts": [3000],
+  "postCreateCommand": "npm install",
+  "appPort": [3000],
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+}
