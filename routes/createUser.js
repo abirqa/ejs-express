@@ -47,7 +47,7 @@ RegisterUserRouter.post('/', async (req, res)=>{
             const userId = Math.floor(Math.random() * (max - min + 1) + min).toString();
           
             return userId;
-          }
+        }
 
         /** If all the above 5 validation succeeds, execute the rest of the code */
         /**
