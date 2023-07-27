@@ -12,6 +12,7 @@ const LogoutRouter = require('./routes/logout');
 const updateUserRouter = require('./routes/updateUser');
 const cookieParser = require('cookie-parser')
 const changePasswordRouter = require('./routes/changePassword');
+const AddNewCustomerRoute = require('./routes/AddNewCustomer');
 
 // Initialiaze Express App//
 const app = express();
@@ -38,6 +39,7 @@ app.use('/api/v1/reset-password', ResetPasswordRouter);
 app.use('/api/v1/logout', LogoutRouter);
 app.use('/api/v1/UpdateUser', updateUserRouter);
 app.use('/api/v1/changePassword', changePasswordRouter);
+app.use('/api/v1/AddNewCustomer', AddNewCustomerRoute);
 
 //Frontend EJS Templates routes//
 app.use('/', frontendRoutes);

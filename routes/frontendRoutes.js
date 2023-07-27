@@ -63,7 +63,18 @@ frontendRoutes.get('/change-password', auth, (req, res) => {
 
     res.render('changePassword', { accessToken, user });
 })
-  
+
+// Router for Data //
+frontendRoutes.get('/all-data', auth, (req, res) => {
+
+    // Get the accesstoken in the change Password route //  
+    const accessToken = req.cookies.accessToken;
+
+    // Store the user details in varibale
+    const user = req.user; 
+
+    res.render('AllData', { accessToken, user });
+}) 
 
 
 module.exports = frontendRoutes;

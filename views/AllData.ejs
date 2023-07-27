@@ -1,0 +1,204 @@
+<%- include('header.ejs'); %>
+
+<% if(accessToken) { %>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Menu Items -->
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/dashboard">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">All Posts</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Users</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">New Entry</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">All Entries</a>
+      </li>
+    </ul>
+
+    <!-- Welcome User Dropdown -->
+    <ul class="navbar-nav" style="margin-right: 20px;"> 
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Welcome <%= user.fullname %>
+          <img src="<%= user.userphoto %>" alt="Avatar" width="30" height="30" class="rounded-circle">
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="/user-profile">My Account</a>
+          <a class="dropdown-item" href="/change-password">Change Password</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="#" id="logout">Logout</a>
+        </div>
+      </li>
+    </ul>
+  </nav>
+<div class="container">
+    <div class="card card-container" style="max-width: 1440px;">
+      <div class="container">
+        <form class="d-flex" style="margin-bottom: 30px; max-width: 50%; float: right !important;">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">&nbsp&nbsp
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal" style="float: left; margin-bottom: 20px;">Add New Entry</button>
+
+        <table class="table mt-2 table-striped table-bordered table-hover table-md">
+          <thead class="thead-dark">
+            <tr>
+              <th><strong>Customer ID</strong></th>
+              <th><strong>Business Name</strong></th>
+              <th><strong>Owner's Name</strong></th>
+              <th><strong>Phone Number</strong></th>
+              <th><strong>Suburb</strong></th>
+              <th><strong>Status</strong></th>
+              <th><strong>Actions</strong></th>
+
+            </tr>
+          </thead>
+          <tbody>
+            
+            <tr>
+              <td>0466</td>
+              <td>ABC Pty Ltd</td>
+              <td>John Doe</td>
+              <td>0412 569 663</td>
+              <td>Lorem Ipsum</td>
+              <td><a href="#" class="badge badge-success">Active</a></td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Action
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">View User</a></li>
+                    <li><a class="dropdown-item" href="#">Edit</a></li>
+                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                  </ul>
+                </div>
+              </td>
+
+            </tr>
+
+            <tr>
+              <td>0786</td>
+              <td>XYZ Pty Ltd</td>
+              <td>Michael Rojer</td>
+              <td>0412 569 663</td>
+              <td>Lorem Ipsum</td>
+              <td><a href="#" class="badge badge-danger">Not Active</a></td>
+              <td>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Action
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#">View User</a></li>
+                    <li><a class="dropdown-item" href="#">Edit</a></li>
+                    <li><a class="dropdown-item" href="#">Delete</a></li>
+                  </ul>
+                </div>
+              </td>
+
+            </tr>
+            
+            
+          </tbody>
+        </table>
+
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
+           Sort Data
+          </button>
+          <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+            <li><a class="dropdown-item" href="#">30</a></li>
+            <li><a class="dropdown-item" href="#">50</a></li>
+            <li><a class="dropdown-item" href="#">80</a></li>
+            <li><a class="dropdown-item" href="#">All</a></li>
+
+          </ul>
+        </div>
+      
+      </div>
+    </div><!-- /card-container -->
+</div><!-- /container -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
+      </div>
+      <div class="modal-body">
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Registration Date</label>
+          <input type="date" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Business Name</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="ABC Pty Ltd">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Customer Name</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="John Doe">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Email</label>
+          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Phone Number</label>
+          <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="0412 699 885">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Street Address</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="123 King St">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Suburb</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Boston">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">State</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Sydney">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Country</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="USA">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Pincode</label>
+          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="2544">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Business Logo</label>
+          <input type="file" class="form-control">
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlInput1" class="form-label">Status</label>
+          <select class="form-control" aria-label="Default select example">
+            <option selected>--Select Status--</option>
+            <option value="Active">Active</option>
+            <option value="Not Active">Not Active</option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="exampleFormControlTextarea1" class="form-label">Extra Information</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% } %>
