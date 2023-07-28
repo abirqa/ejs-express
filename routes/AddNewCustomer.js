@@ -3,72 +3,104 @@ const AddNewCustomerRoute = express.Router();
 const multer = require('multer');
 const emailValidator = require('email-validator');
 const CustomerModel = require('../models/customerModel');
+const upload = multer({ dest: 'uploads/business-logos/', limits: { fileSize: 1024 * 1024 * 10 } })
+const fs = require('fs');
 
-AddNewCustomerRoute.use(express.json());
 
-// Function to generate a random 4-digit customer ID
-function generateCustomerId() {
-  const min = 1000;
-  const max = 9999;
-  const customerId = Math.floor(Math.random() * (max - min + 1) + min).toString();
-  return customerId;
-}
+//set the file upload limit to 10mb//
+AddNewCustomerRoute.use(express.json({ limit: '10mb' }));
+AddNewCustomerRoute.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
-// Define multer storage with custom filename function
-const storage = multer.diskStorage({
-  destination: 'uploads/business-logos/',
-  filename: function (req, file, callback) {
-    const customerId = generateCustomerId();
-    const filename = `${customerId}.png`; // Assuming the file will be saved as PNG format
-    callback(null, filename);
-  }
-});
+AddNewCustomerRoute.post('/:UserID', async (req, res) => {
 
-const upload = multer({
-  storage: storage,
-  limits: { fileSize: 1024 * 1024 * 10 }
-}).single('business_logo');
-
-AddNewCustomerRoute.post("/:UserID", async (req, res) => {
   try {
-    const UserID = req.params.UserID;
-    const {
-      registration_date,
-      business_name,
-      customer_name,
-      email,
-      phone,
-      street_address,
-      suburb,
-      state,
-      country,
-      pincode,
-      status,
-      extra_info
+    const { UserID } = req.params;
+    
+    const { 
+      registration_date, 
+      business_name, 
+      customer_name, 
+      email, phone, 
+      street_address, 
+      suburb, state, 
+      country, 
+      pincode, 
+      business_logo, 
+      status, 
+      extra_info 
     } = req.body;
 
-    // Check if required fields are present in the request body
+    // Lets check if any of the fields are blank or not //
     if (!registration_date || !business_name || !customer_name || !email || !phone || !street_address || !suburb || !state || !country || !pincode || !status) {
-      return res.status(400).json({ message: "Missing required fields in the request body" });
+      return res.status(400).json({ error_msg: "Please fill the Required Fields!" })
     }
 
-    // Check if given email is valid
+    // Check if the business name exist in the db //
+    const checkBusinessName = await CustomerModel.findOne({ business_name: business_name });
+    if (checkBusinessName) {
+      return res.status(401).json({ error_msg: "Business Name Already Exists in the Database!" });
+    }
+
+    // Check if the email is validate or not //
     if (email && !emailValidator.validate(email)) {
-      return res.status(422).json({ message: "Email ID is Not Valid!. Please Use a Valid Email Address" });
+      return res.status(422).json({ message: "Email ID is Not Valid!. Please Use a Valid Email Address" })
     }
 
-    // Check if Email ID already exists in MongoDB
-    const emailExist = await CustomerModel.findOne({ email });
-    if (emailExist) {
-      return res.status(409).json({ message: "Email ID already Exists! Please use a Different Email" });
+    // Check if the business name exist in the db //
+    const checkEmailID = await CustomerModel.findOne({ email: email });
+    if (checkEmailID) {
+      return res.status(401).json({ error_msg: "Business Email Already Exists in the Database!" });
     }
 
-    // Generate a random 4-digit User ID
+    // Generate a random 4 Digit User ID //
+    function generateCustomerId() {
+      const min = 1000;
+      const max = 9999;
+
+      const CustomerId = Math.floor(Math.random() * (max - min + 1) + min).toString();
+
+      return CustomerId;
+    }
+
+    // Generate the customerId
     const customerId = generateCustomerId();
 
-    // Add the Data into MongoDB
-    const AddNewCustomer = new CustomerModel({
-      customer_id: customerId,
+    // Check if business_logo is there
+    if (business_logo) {
+      const base64Data = business_logo;
+      const base64Image = base64Data.split(';base64').pop();
+
+      const filename = `uploads/business-logos/BusinessLogo_${customerId}.jpg`;
+
+      await fs.promises.writeFile(filename, base64Image, { encoding: 'base64' });
+
+      // Save the data to MongoDB
+      const newCustomer = new CustomerModel({
+        customer_id: customerId,
+        registration_date,
+        business_name,
+        customer_name,
+        email,
+        phone,
+        street_address,
+        suburb,
+        state,
+        country,
+        pincode,
+        status,
+        extra_info,
+        adminID: UserID,
+        business_logo: filename // Save the path of the uploaded image
+      });
+
+      await newCustomer.save();
+
+      return res.status(200).json({ success_message: "Customer registration successful" });
+    }
+
+     // If business_logo is not present, save the data without the image
+     const newCustomer = new CustomerModel({
+      customer_id: generateCustomerId(),
       registration_date,
       business_name,
       customer_name,
@@ -81,27 +113,18 @@ AddNewCustomerRoute.post("/:UserID", async (req, res) => {
       pincode,
       status,
       extra_info,
-      adminID : UserID,
+      adminID: UserID,
     });
 
-    const SaveCustomer = await AddNewCustomer.save();
-    console.log("Registration Successful", SaveCustomer);
+    await newCustomer.save();
 
-    // Upload the image using multer
-    upload(req, res, (err) => {
-      if (err) {
-        console.log("File upload error:", err);
-        return res.status(400).json({ message: "Error uploading file" });
-      }
-
-      // Send a response to the client
-      res.status(201).json({ message: "Customer registration successful" });
-    });
+    return res.status(200).json({ success_message: "Customer registration successful" });
 
   } catch (error) {
+    res.status(500).json({error_message: "Internal Server Error! Please Try Again Later"});
     console.log(error);
-    res.status(500).json({ message: "Internal Server Error" });
   }
-});
+
+})
 
 module.exports = AddNewCustomerRoute;

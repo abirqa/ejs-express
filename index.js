@@ -27,7 +27,9 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.set("view engine", 'ejs');
 
 //parse the client side data into formData//
+// app.use(express.urlencoded({ extended: false }));
 // app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
 
 
 // Backend API Routes //
