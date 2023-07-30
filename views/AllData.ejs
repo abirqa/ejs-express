@@ -47,6 +47,8 @@
         </form>
         <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal" style="float: left; margin-bottom: 20px;">Add New Entry</button>
 
+        <%= user.userID %>
+
         <table class="table mt-2 table-striped table-bordered table-hover table-md">
           <thead class="thead-dark">
             <tr>
@@ -136,69 +138,176 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">X</button>
       </div>
       <div class="modal-body">
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Registration Date</label>
-          <input type="date" class="form-control">
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Business Name</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="ABC Pty Ltd">
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Customer Name</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="John Doe">
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Email</label>
-          <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Phone Number</label>
-          <input type="number" class="form-control" id="exampleFormControlInput1" placeholder="0412 699 885">
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Street Address</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="123 King St">
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Suburb</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Boston">
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">State</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="Sydney">
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Country</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="USA">
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Pincode</label>
-          <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="2544">
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Business Logo</label>
-          <input type="file" class="form-control">
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlInput1" class="form-label">Status</label>
-          <select class="form-control" aria-label="Default select example">
-            <option selected>--Select Status--</option>
-            <option value="Active">Active</option>
-            <option value="Not Active">Not Active</option>
-          </select>
-        </div>
-        <div class="mb-3">
-          <label for="exampleFormControlTextarea1" class="form-label">Extra Information</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
+
+        <div id="alertMessage" class="alert" role="alert" style="display: none !important">
+          <strong></strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
-      </div>
+
+        <form id="addCustomer" enctype="multipart/form-data">
+
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Registration Date</label>
+            <input type="date" class="form-control" name="registration_date">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Business Name</label>
+            <input type="text" class="form-control" name="business_name" id="exampleFormControlInput1" placeholder="ABC Pty Ltd">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Customer Name</label>
+            <input type="text" class="form-control" name="customer_name" id="exampleFormControlInput1" placeholder="John Doe">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Email</label>
+            <input type="email" class="form-control" name="email" id="exampleFormControlInput1" placeholder="name@example.com">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Phone Number</label>
+            <input type="number" class="form-control" name="phone" id="exampleFormControlInput1" placeholder="0412 699 885">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Street Address</label>
+            <input type="text" class="form-control" name="street_address" id="exampleFormControlInput1" placeholder="123 King St">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Suburb</label>
+            <input type="text" class="form-control" name="suburb" id="exampleFormControlInput1" placeholder="Boston">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">State</label>
+            <input type="text" class="form-control" name="state" id="exampleFormControlInput1" placeholder="Sydney">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Country</label>
+            <input type="text" class="form-control" name="country" id="exampleFormControlInput1" placeholder="USA">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Pincode</label>
+            <input type="number" class="form-control" name="pincode" id="exampleFormControlInput1" placeholder="2544">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Business Logo</label>
+            <input type="file" class="form-control" name="business_logo" id="business_logo">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Status</label>
+            <select class="form-control" aria-label="Default select example" name="status">
+              <option selected>--Select Status--</option>
+              <option value="Active">Active</option>
+              <option value="Not Active">Not Active</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Extra Information</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="extra_info"></textarea>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary" id="saveChangesButton">Save changes</button>
+        </div>
+
+    </form>
     </div>
   </div>
 </div>
 
 <% } %>
+
+<script>
+  // Function to handle form submission
+  async function submitForm() {
+    const form = document.getElementById('addCustomer');
+
+    // Check if form exists and is accessible
+    if (!form) {
+      console.error("Form not found or inaccessible.");
+      return;
+    }
+
+    // Create a JSON object from form data
+    const formData = {};
+    const elements = form.elements;
+    for (let i = 0; i < elements.length; i++) {
+      const element = elements[i];
+      if (element.name && element.value) {
+        formData[element.name] = element.value;
+      }
+    }
+
+    // Convert the file to Base64
+    const businessLogoInput = document.getElementById('business_logo');
+    const file = businessLogoInput.files[0];
+
+    if (file) {
+      formData.business_logo = await convertFileToBase64(file);
+    }
+
+    // Send JSON data to the API endpoint
+    fetch(`/api/v1/AddNewCustomer/<%= user.userID%>`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(formData),
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.success_message);
+
+        let message = '';
+        let alertClass = '';
+
+          if (data.success_message) {
+            alertClass = "alert-success";
+            message = data.success_message;
+
+              } else {
+                alertClass = "alert-danger";
+                message = data.error_msg;
+              }
+
+              showAlert(message, alertClass);
+      })
+      .catch(error => {
+        console.error("Error sending form data:", error);
+      });
+  }
+
+  // Attach click event to the Save Changes button
+  document.getElementById('saveChangesButton').addEventListener('click', function () {
+    submitForm();
+  });
+
+  // Function to convert file to Base64
+  function convertFileToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+
+      reader.onload = function () {
+        resolve(reader.result.split(',')[1]);
+      };
+
+      reader.onerror = function (error) {
+        reject(error);
+      };
+    });
+  }
+
+  function showAlert(message, alertClass) {
+      const alertElement = document.getElementById("alertMessage");
+      alertElement.className = `alert ${alertClass}`;
+      alertElement.textContent = message;
+      alertElement.style.display = "block";
+    }
+
+</script>
+
+
+
+
+

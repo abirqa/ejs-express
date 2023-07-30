@@ -20,15 +20,19 @@ AddNewCustomerRoute.post('/:UserID', async (req, res) => {
       registration_date, 
       business_name, 
       customer_name, 
-      email, phone, 
+      email, 
+      phone, 
       street_address, 
-      suburb, state, 
+      suburb, 
+      state, 
       country, 
       pincode, 
       business_logo, 
       status, 
       extra_info 
     } = req.body;
+
+    console.log(req.body);
 
     // Lets check if any of the fields are blank or not //
     if (!registration_date || !business_name || !customer_name || !email || !phone || !street_address || !suburb || !state || !country || !pincode || !status) {
@@ -43,7 +47,7 @@ AddNewCustomerRoute.post('/:UserID', async (req, res) => {
 
     // Check if the email is validate or not //
     if (email && !emailValidator.validate(email)) {
-      return res.status(422).json({ message: "Email ID is Not Valid!. Please Use a Valid Email Address" })
+      return res.status(422).json({ error_msg: "Email ID is Not Valid!. Please Use a Valid Email Address" })
     }
 
     // Check if the business name exist in the db //
@@ -118,10 +122,10 @@ AddNewCustomerRoute.post('/:UserID', async (req, res) => {
 
     await newCustomer.save();
 
-    return res.status(200).json({ success_message: "Customer registration successful" });
+    return res.status(200).json({success_message: "Customer registration successful" });
 
   } catch (error) {
-    res.status(500).json({error_message: "Internal Server Error! Please Try Again Later"});
+    res.status(500).json({error_msg: "Internal Server Error! Please Try Again Later"});
     console.log(error);
   }
 
