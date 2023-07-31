@@ -13,6 +13,7 @@ const updateUserRouter = require('./routes/updateUser');
 const cookieParser = require('cookie-parser')
 const changePasswordRouter = require('./routes/changePassword');
 const AddNewCustomerRoute = require('./routes/AddNewCustomer');
+const GetAllCustomers = require('./routes/getAllCustomers');
 
 // Initialiaze Express App//
 const app = express();
@@ -42,6 +43,7 @@ app.use('/api/v1/logout', LogoutRouter);
 app.use('/api/v1/UpdateUser', updateUserRouter);
 app.use('/api/v1/changePassword', changePasswordRouter);
 app.use('/api/v1/AddNewCustomer', AddNewCustomerRoute);
+app.use('/api/v1/GetAllCustomers', GetAllCustomers);
 
 //Frontend EJS Templates routes//
 app.use('/', frontendRoutes);
