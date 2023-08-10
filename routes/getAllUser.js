@@ -6,6 +6,7 @@ getAllUser.get('/', async (req, res)=>{
     try{
         const AllUsers = await UserModel.find();
         res.status(201).json({message: "Retreieved Users Lists", UsersList : AllUsers});
+        console.log(AllUsers);
     }
     catch{
         console.error(err);

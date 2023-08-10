@@ -4,6 +4,8 @@ const UserDetails = require('../routes/loginUser');
 const dotenv = require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const auth = require('../middleware/auth');
+const { fetchDataFromAPI } = require('../middleware/pagination');
+
 
 //Route for Homepage / Login Page
 frontendRoutes.get('/', (req, res)=>{
@@ -65,15 +67,27 @@ frontendRoutes.get('/change-password', auth, (req, res) => {
 })
 
 // Router for Data //
-frontendRoutes.get('/all-data', auth, (req, res) => {
+frontendRoutes.get('/all-data', auth, async (req, res) => {
 
     // Get the accesstoken in the change Password route //  
     const accessToken = req.cookies.accessToken;
 
     // Store the user details in varibale
     const user = req.user; 
+    console.log(user);
 
-    res.render('AllData', { accessToken, user });
+    // Replace '4049' with the actual adminID
+    const adminID = user.userID;
+    const page = req.query.page || 1;
+
+    const response = await fetchDataFromAPI(adminID, page);
+    const data = response.data;
+
+    const pagination = data.pagination;
+
+
+
+    res.render('AllData', { accessToken, user, data, pagination });
 }) 
 
 
