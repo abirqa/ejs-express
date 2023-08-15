@@ -77,7 +77,7 @@ loginUserRouter.post('/', async (req,res) => {
                 res.cookie('accessToken', 
                 token, // set the varibale and value for access token
                 { httpOnly: true, 
-                    secure: true, 
+                    // secure: true, 
                     expires: expirationTime // set the cookie options 
                 });
                 
