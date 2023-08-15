@@ -55,7 +55,7 @@ ForgotPasswordRouter.post('/', async (req, res)=>{
         );
 
         //If all the above validations passed, send password reset link to user//
-        const resetLink = `http://localhost:5000/api/v1/reset-password/${user.user_id}/${resetpwdtoken}`;
+        const resetLink = `/api/v1/reset-password/${user.user_id}/${resetpwdtoken}`;
 
         //console.log(resetLink); 
 
