@@ -1,5 +1,6 @@
 const express = require('express');
-const port = process.env.PORT || 5000;
+const cors = require('cors');
+const port = process.env.port || 8000;
 const path = require('path');
 const frontendRoutes = require('./routes/frontendRoutes');
 const dbConfig = require('./config/dbConfig');
@@ -15,8 +16,11 @@ const changePasswordRouter = require('./routes/changePassword');
 const AddNewCustomerRoute = require('./routes/AddNewCustomer');
 const GetAllCustomers = require('./routes/getAllCustomers');
 
+
 // Initialiaze Express App//
 const app = express();
+
+app.use(cors());
 
 app.use(cookieParser());
 

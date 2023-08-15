@@ -275,7 +275,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const page = urlParams.get('page') || 1;
 
-        const api = await fetch ('http://localhost:5000/api/v1/GetAllCustomers/<%= user.userID %>?page=${page}');
+        const api = await fetch (`/api/v1/GetAllCustomers/<%= user.userID %>?page=${page}`);
         const data = await api.json();
         //console.log(data.data.results);
 
