@@ -47,8 +47,6 @@
         </form>
         <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#exampleModal" style="float: left; margin-bottom: 20px;">Add New Entry</button>
 
-        <%= user.userID %>
-
         <table class="table mt-2 table-striped table-bordered table-hover table-md">
           <thead class="thead-dark">
             <tr>
@@ -62,55 +60,21 @@
 
             </tr>
           </thead>
-          <tbody>
-            
-            <tr>
-              <td>0466</td>
-              <td>ABC Pty Ltd</td>
-              <td>John Doe</td>
-              <td>0412 569 663</td>
-              <td>Lorem Ipsum</td>
-              <td><a href="#" class="badge badge-success">Active</a></td>
-              <td>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Action
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">View User</a></li>
-                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                  </ul>
-                </div>
-              </td>
-
-            </tr>
-
-            <tr>
-              <td>0786</td>
-              <td>XYZ Pty Ltd</td>
-              <td>Michael Rojer</td>
-              <td>0412 569 663</td>
-              <td>Lorem Ipsum</td>
-              <td><a href="#" class="badge badge-danger">Not Active</a></td>
-              <td>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-                    Action
-                  </button>
-                  <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">View User</a></li>
-                    <li><a class="dropdown-item" href="#">Edit</a></li>
-                    <li><a class="dropdown-item" href="#">Delete</a></li>
-                  </ul>
-                </div>
-              </td>
-
-            </tr>
-            
+          <tbody id="CustomerDataTableBody">           
             
           </tbody>
         </table>
+
+        <!-- Pagination -->
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+              <% for (let page = 1; page <= pagination.totalPages; page++) { %>
+                  <li class="page-item <%= pagination.currentPage === page ? 'active' : '' %>">
+                      <a class="page-link" href="/all-data?page=<%= page %>"><%= page %></a>
+                  </li>
+              <% } %>
+          </ul>
+        </nav>
 
         <div class="dropdown">
           <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown" aria-expanded="false">
@@ -304,6 +268,56 @@
       alertElement.textContent = message;
       alertElement.style.display = "block";
     }
+
+    // fetch json data from backend api //
+    async function getCustomerData() {
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const page = urlParams.get('page') || 1;
+
+        const api = await fetch ('http://localhost:5000/api/v1/GetAllCustomers/<%= user.userID %>?page=${page}');
+        const data = await api.json();
+        //console.log(data.data.results);
+
+        // Show data into table //
+        if (data.data && data.data.results) {
+        const tableBody = document.getElementById('CustomerDataTableBody');
+        tableBody.innerHTML = ''; // Clear any existing rows
+
+        data.data.results.forEach((customer) => {
+          const newRow = document.createElement('tr');
+          newRow.innerHTML = `
+            <td>${customer.customer_id}</td>
+            <td>${customer.business_name}</td>
+            <td>${customer.customer_name}</td>
+            <td>${customer.phone}</td>
+            <td>${customer.suburb}</td>
+            <td><a href="#" class="badge badge-${customer.status === 'Active' ? 'success' : 'danger'}">${customer.status}</a></td>
+            <td>
+              <div class="btn-group">
+                <button type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                  Action
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">View User</a></li>
+                  <li><a class="dropdown-item" href="#">Edit</a></li>
+                  <li><a class="dropdown-item" href="#">Delete</a></li>
+                </ul>
+              </div>
+            </td>
+          `;
+
+          tableBody.appendChild(newRow);
+        });
+      }
+        
+      } catch (error) {
+        console.log(error)
+        
+      }
+    }
+
+    window.addEventListener('load', getCustomerData);
 
 </script>
 
