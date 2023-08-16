@@ -166,7 +166,8 @@
           </div>
           <div class="mb-3">
             <label for="exampleFormControlTextarea1" class="form-label">Extra Information</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="extra_info"></textarea>
+            <textarea id="editorContent" name="extra_info" style="display: none;"></textarea>
+            <div id="editor"></div>
           </div>
         </div>
         <div class="modal-footer">
@@ -182,6 +183,22 @@
 <% } %>
 
 <script>
+
+tinymce.init({
+        selector: '#editor', // Use the ID of the container element
+        height: 300, // Set the height of the editor
+        plugins: 'link image code', // Include desired plugins
+        toolbar: 'undo redo | bold italic | alignleft aligncenter alignright | code', // Customize the toolbar
+        menubar: false, 
+        setup: function (editor) {
+            editor.on('change', function () {
+                const content = editor.getContent();
+                document.getElementById('editorContent').value = content;
+            });
+        }
+    });
+
+
   // Function to handle form submission
   async function submitForm() {
     const form = document.getElementById('addCustomer');
