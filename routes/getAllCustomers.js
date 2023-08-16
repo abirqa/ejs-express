@@ -12,7 +12,7 @@ GetAllCustomers.get('/:adminID', async (req, res) => {
         const totalPages = Math.ceil(totalCount / pageSize);
 
         const query = await CustomerModel.find({ adminID })
-            .sort({ registration_date: -1 }) // Sorting by registration_date in descending order
+            .sort({ _id: -1 }) // Sorting by registration_date in descending order
             .skip((page - 1) * pageSize)
             .limit(pageSize);
 
