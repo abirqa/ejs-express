@@ -15,6 +15,7 @@ const cookieParser = require('cookie-parser')
 const changePasswordRouter = require('./routes/changePassword');
 const AddNewCustomerRoute = require('./routes/AddNewCustomer');
 const GetAllCustomers = require('./routes/getAllCustomers');
+const GetCustomerDetails = require("./routes/getCustomerDetails");
 
 
 // Initialiaze Express App//
@@ -48,6 +49,7 @@ app.use('/api/v1/UpdateUser', updateUserRouter);
 app.use('/api/v1/changePassword', changePasswordRouter);
 app.use('/api/v1/AddNewCustomer', AddNewCustomerRoute);
 app.use('/api/v1/GetAllCustomers', GetAllCustomers);
+app.use('/api/v1/GetCustomerDetails', GetCustomerDetails);
 
 //Frontend EJS Templates routes//
 app.use('/', frontendRoutes);

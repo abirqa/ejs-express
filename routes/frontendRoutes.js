@@ -90,5 +90,25 @@ frontendRoutes.get('/all-data', auth, async (req, res) => {
     res.render('AllData', { accessToken, user, data, pagination });
 }) 
 
+// Router for Single Customer Data //
+frontendRoutes.get('/customer', auth, async (req, res) => {
+
+    // Get the accesstoken in the change Password route //  
+    const accessToken = req.cookies.accessToken;
+
+    // Store the user details in varibale
+    const user = req.user; 
+    console.log(user);
+
+    // Modify user.userphoto to remove '/customers' from the URL
+    user.userphoto = user.userphoto.replace('/customers', '');
+
+    // Replace '4049' with the actual adminID
+    //const adminID = user.userID;
+    const customerID = req.query.customer_id;
+
+    res.render('singleCustomer', { accessToken, user, customerID });
+}) 
+
 
 module.exports = frontendRoutes;

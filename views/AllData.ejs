@@ -277,7 +277,7 @@
 
         const api = await fetch (`/api/v1/GetAllCustomers/<%= user.userID %>?page=${page}`);
         const data = await api.json();
-        //console.log(data.data.results);
+        console.log(data.data.results);
 
         // Show data into table //
         if (data.data && data.data.results) {
@@ -299,7 +299,7 @@
                   Action
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#">View User</a></li>
+                  <li><a class="dropdown-item" href=/customer?adminID=${customer.adminID}&customer_id=${customer.customer_id}>View User</a></li>
                   <li><a class="dropdown-item" href="#">Edit</a></li>
                   <li><a class="dropdown-item" href="#">Delete</a></li>
                 </ul>
