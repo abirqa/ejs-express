@@ -1,43 +1,49 @@
 <%- include('header.ejs'); %>
 
 <% if(accessToken) { %>
-  <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <!-- Menu Items -->
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a class="nav-link" href="/dashboard">Dashboard</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">All Posts</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Admin Users</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Invoices</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="/all-data">Customer Entries</a>
-      </li>
-    </ul>
+   <!-- Navbar -->
+   <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#" style="color:blue; font-weight: 600;">WMX Internal Portal</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  <!-- Menu Items -->
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav mr-auto">
+    <li class="nav-item">
+      <a class="nav-link" href="/dashboard">Dashboard</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">All Posts</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Admin Users</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">Invoices</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="/all-data">Customer Entries</a>
+    </li>
+  </ul>
+  </div>
 
-    <!-- Welcome User Dropdown -->
-    <ul class="navbar-nav" style="margin-right: 20px;"> 
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Welcome <%= user.fullname %>
-          <img src="<%= user.userphoto %>" alt="Avatar" width="30" height="30" class="rounded-circle">
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="/user-profile">My Account</a>
-          <a class="dropdown-item" href="/change-password">Change Password</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#" id="logout">Logout</a>
-        </div>
-      </li>
-    </ul>
-  </nav>
+  <!-- Welcome User Dropdown -->
+  <ul class="navbar-nav dropdownUserbar" style="margin-right: 20px;"> 
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Welcome <%= user.fullname %>
+        <img src="<%= user.userphoto %>" alt="Avatar" width="30" height="30" class="rounded-circle">
+      </a>
+      <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+        <a class="dropdown-item" href="/user-profile">My Account</a>
+        <a class="dropdown-item" href="/change-password">Change Password</a>
+        <div class="dropdown-divider"></div>
+        <a class="btn btn-danger" href="#" id="logout" style="margin-left: 1rem;">System Logout</a>
+      </div>
+    </li>
+  </ul>
+</nav>
 <div class="container">
     <div class="card card-container">
         <h1 style="text-align: center; margin-bottom: 20px; font-weight: 700;">Your Profile</h1>
