@@ -12,13 +12,13 @@
         <a class="nav-link" href="#">All Posts</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">Users</a>
+        <a class="nav-link" href="#">Admin Users</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">New Entry</a>
+        <a class="nav-link" href="#">Invoices</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="#">All Entries</a>
+        <a class="nav-link" href="/all-data">Customer Entries</a>
       </li>
     </ul>
 
@@ -318,7 +318,7 @@ tinymce.init({
                 <ul class="dropdown-menu">
                   <li><a class="dropdown-item" href=/customer?adminID=${customer.adminID}&customer_id=${customer.customer_id}>View User</a></li>
                   <li><a class="dropdown-item" href="#">Edit</a></li>
-                  <li><a class="dropdown-item" href="#">Delete</a></li>
+                  <li id="deleteCustomer"><a class="dropdown-item" href="#" data-customer-id=${customer.customer_id} onclick="handleDeleteButtonClick(event)">Delete</a></li>
                 </ul>
               </div>
             </td>
@@ -335,6 +335,74 @@ tinymce.init({
     }
 
     window.addEventListener('load', getCustomerData);
+
+    /** 
+     * Delete Customer Data Starts
+    */
+
+    const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: 'btn btn-success delSuccess',
+            cancelButton: 'btn btn-danger',
+        },
+        buttonsStyling: false
+    });
+
+    function handleDeleteButtonClick  (event) {
+    event.preventDefault(); // Prevent the default link behavior
+    
+    var customerId = event.target.getAttribute('data-customer-id');
+    
+    swalWithBootstrapButtons.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Yes, delete it!',
+        cancelButtonText: 'No, cancel!',
+        reverseButtons: true
+    }).then((result) => {
+        if (result.isConfirmed) {
+            deleteCustomer(customerId); // Call the delete API
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'Your imaginary file is safe :)',
+                'error'
+            );
+        }
+    });
+}
+
+function deleteCustomer(customerId) {
+    // Call your delete API endpoint using fetch
+    fetch(`/api/v1/DeleteCustomer?customer_id=${customerId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    .then(response => response.json())
+    .then(data => {
+        // Handle success response
+        swalWithBootstrapButtons.fire(
+            'Deleted!',
+            `${data.success_msg}`,
+            'success'
+        ).then(() => {
+            // Reload the window after clicking "OK" on the SweetAlert popup
+            window.location.reload();
+        });
+    })
+    .catch(error => {
+        // Handle error
+        swalWithBootstrapButtons.fire(
+            'Error',
+            'An error occurred while deleting.',
+            'error'
+        );
+    });
+}
 
 </script>
 
