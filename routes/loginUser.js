@@ -50,7 +50,7 @@ loginUserRouter.post('/', async (req,res) => {
         }
 
         // Create a Cookie variable and store the accessToken in it //
-        const expirationTime = new Date(Date.now() + 2 * 60 * 1000); //Cookie variable expires in 2 minutes from now
+        const expirationTime = new Date(Date.now() + 30 * 60 * 1000); // 30 minutes cookie expiration time
 
         //If password and email both matches generate a JWT for accessing the site//
         jwt.sign(
