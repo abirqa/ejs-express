@@ -17,6 +17,7 @@ const AddNewCustomerRoute = require('./routes/AddNewCustomer');
 const GetAllCustomers = require('./routes/getAllCustomers');
 const GetCustomerDetails = require("./routes/getCustomerDetails");
 const DeleteCustomer = require('./routes/DeleteCustomer');
+const SearchCustomerRoute = require('./routes/SearchCustomer');
 
 
 // Initialiaze Express App//
@@ -52,6 +53,7 @@ app.use('/api/v1/AddNewCustomer', AddNewCustomerRoute);
 app.use('/api/v1/GetAllCustomers', GetAllCustomers);
 app.use('/api/v1/GetCustomerDetails', GetCustomerDetails);
 app.use('/api/v1/DeleteCustomer', DeleteCustomer);
+app.use('/api/v1/SearchCustomer', SearchCustomerRoute);
 
 
 //Frontend EJS Templates routes//
